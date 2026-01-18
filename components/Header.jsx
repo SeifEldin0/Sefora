@@ -87,7 +87,7 @@ const Hero = () => {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-100/50 text-primary-600 text-xs font-black uppercase tracking-widest mb-8 border border-primary-200/30 backdrop-blur-md"
           >
             <Sparkles size={14} className="fill-current" />
-            <span>Premium Collection 2024</span>
+            <span>Premium Collection 2026</span>
           </motion.div>
 
           <h1 className="hero-title text-6xl md:text-8xl font-black text-foreground leading-[1.1] mb-8 tracking-tighter">
@@ -127,7 +127,7 @@ const Hero = () => {
             {/* Overlay Glass Tag */}
             <div className="absolute bottom-10 left-10 glass px-8 py-4 rounded-3xl border border-white/40 backdrop-blur-2xl">
               <p className="text-foreground/40 text-xs font-black uppercase tracking-widest mb-1">New Arrivals</p>
-              <p className="text-2xl font-black text-foreground leading-none">Summer Glow &apos;24</p>
+              <p className="text-2xl font-black text-foreground leading-none">Summer Glow &apos;26</p>
             </div>
           </div>
           

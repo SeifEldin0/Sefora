@@ -32,10 +32,10 @@ const Navbar = () => {
       <div className="container mx-auto px-6">
         <div className={`glass px-8 h-20 rounded-[2rem] flex items-center justify-between border-white/30 backdrop-blur-2xl transition-all duration-500 shadow-2xl ${scrolled ? 'mx-0' : 'mx-4'}`}>
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-12 h-12 rounded-2xl overflow-hidden shadow-lg group-hover:scale-105 transition-transform duration-300">
+            <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-400 rounded-2xl flex items-center justify-center text-white shadow-lg group-hover:scale-105 transition-transform duration-300">
                <Image src="/logo.svg" alt="MOU Logo" width={48} height={48} className="w-full h-full" />
             </div>
-            <span className="text-2xl font-black tracking-tight text-gray-700 group-hover:text-pink-500 transition-colors">MOU</span>
+            <span className="text-2xl font-black tracking-tight text-foreground group-hover:text-primary-500 transition-colors">MOU</span>
           </Link>
 
           {/* Desktop Menu */}
