@@ -44,7 +44,7 @@ const ProductCard = memo(({ id, name, price, images, description, notes, isTrend
     <article
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="group relative rounded-3xl overflow-hidden flex flex-col h-full bg-white border border-pink-100 shadow-sm hover:shadow-xl hover:shadow-pink-200/40 transition-all duration-300"
+      className="group relative rounded-3xl overflow-hidden flex flex-col h-full bg-gray-500 border border-pink-100 shadow-sm hover:shadow-xl hover:shadow-pink-200/40 transition-all duration-300"
     >
       {/* Image Container */}
       <div 
@@ -144,7 +144,7 @@ const ProductCard = memo(({ id, name, price, images, description, notes, isTrend
             href={`https://wa.me/${phoneNumber}?text=أنا%20مهتم%20بشراء%20${encodeURIComponent(name)}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 h-11 rounded-2xl font-bold text-xs text-white bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-emerald-200/50"
+            className="flex-1 h-11 rounded-2xl font-bold text-xs text-white bg-gradient-to-r from-gray-500 to-gray-500 hover:from-gray-600 hover:to-gray-600 transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-gray-200/50"
           >
             <MessageCircle size={16} />
             <span>اطلب الآن</span>
