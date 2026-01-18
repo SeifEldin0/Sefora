@@ -1,50 +1,167 @@
 @import "tailwindcss";
 
+@theme {
+  /* Soft Pink - Main Brand Color */
+  --color-primary-50: #fdf2f8;
+  --color-primary-100: #fce7f3;
+  --color-primary-200: #fbcfe8;
+  --color-primary-300: #f9a8d4;
+  --color-primary-400: #f472b6;
+  --color-primary-500: #ec4899;
+  --color-primary-600: #db2777;
+  --color-primary-700: #be185d;
+  --color-primary-800: #9d174d;
+  --color-primary-900: #831843;
+
+  /* Rose Gold Accent */
+  --color-accent-gold: #e8b4b8;
+  --color-glass-bg: rgba(255, 255, 255, 0.85);
+  --color-glass-border: rgba(236, 72, 153, 0.1);
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fffbfc;
+  --foreground: #4a4a4a;
   --primary: #ec4899;
-  --secondary: #fce7f3;
-  --text-color: #444;
+  --secondary: #fdf2f8;
+  --accent: #e8b4b8;
+  --glass-bg: rgba(255, 255, 255, 0.9);
+  --glass-border: rgba(236, 72, 153, 0.15);
+  --shadow-premium: 0 10px 40px -10px rgba(236, 72, 153, 0.15);
+  --irid-gradient: linear-gradient(135deg, #ec4899, #f472b6, #e8b4b8, #ec4899);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #ffffff;
-    --foreground: #fce7f3;
-    --text-color: #e5e7eb;
+    --background: #1a1a2e;
+    --foreground: #fdf2f8;
+    --primary: #f472b6;
+    --secondary: #2d2d44;
+    --glass-bg: rgba(26, 26, 46, 0.9);
+    --glass-border: rgba(244, 114, 182, 0.2);
   }
+}
+
+* {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
 body {
   background-color: var(--background);
-  color: var(--text-color);
-  font-family: 'Arial', sans-serif;
+  color: var(--foreground);
+  font-family: var(--font-roboto), "Inter", system-ui, -apple-system, sans-serif;
   margin: 0;
   padding: 0;
   line-height: 1.6;
-  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  cursor: default;
 }
 
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-  border-radius: 0.5rem;
+@utility glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-premium);
 }
 
+@utility glass-grainy {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-premium);
+}
+
+@utility premium-shadow {
+  box-shadow: var(--shadow-premium);
+}
+
+@utility gradient-text {
+  background: linear-gradient(135deg, #ec4899, #f472b6, #e8b4b8);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@utility btn-premium {
+  position: relative;
+  overflow: hidden;
+  padding: 0.875rem 1.75rem;
+  border-radius: 0.75rem;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #ec4899, #f472b6);
+  color: white;
+  box-shadow: 0 4px 15px -3px rgba(236, 72, 153, 0.4);
+}
+
+.btn-premium:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px -5px rgba(236, 72, 153, 0.5);
+}
+
+.btn-premium:active {
+  transform: translateY(0);
+}
+
+@utility btn-outline {
+  padding: 0.875rem 1.75rem;
+  border-radius: 0.75rem;
+  font-weight: 700;
+  border: 2px solid #ec4899;
+  color: #ec4899;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: transparent;
+}
+
+.btn-outline:hover {
+  background-color: #fdf2f8;
+  transform: translateY(-2px);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fdf2f8;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #ec4899, #f472b6);
+  border-radius: 100px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #db2777, #ec4899);
+}
+
+h1, h2, h3, h4 {
+  letter-spacing: -0.02em;
+  color: #4a4a4a;
+}
+
+/* Smooth link transitions */
 a {
-  text-decoration: none;
-  color: var(--primary);
-  transition: color 0.3s ease;
-}
-
-a:hover {
-  color: #db2777;
-}
-
-.container {
-  max-width: 100%;
-  margin: 0 auto;
-  padding: 0 1rem;
+  transition: color 0.2s ease;
 }

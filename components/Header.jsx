@@ -1,129 +1,162 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import Link from "next/link";
+import gsap from "gsap";
+import { ArrowRight, Sparkles, Star, CheckCircle2 } from "lucide-react";
+import { motion } from "framer-motion";
 
 const Hero = () => {
-  const [displayedTitle, setDisplayedTitle] = useState("");
-  const [displayedText, setDisplayedText] = useState("");
-
-  const fullTitle = "Stay in style with";
-  const fullText =
-    "Discover our latest beauty products and stay radiant with our premium selections made just for you.";
+  const containerRef = useRef(null);
+  const titleRef = useRef(null);
+  const textRef = useRef(null);
+  const btnRef = useRef(null);
+  const imageRef = useRef(null);
+  const blobsRef = useRef(null);
 
   useEffect(() => {
-    let titleIndex = 0;
-    let textIndex = 0;
+    const ctx = gsap.context(() => {
+      // Staggered text entrance
+      gsap.from(".hero-title span", {
+        y: 100,
+        opacity: 0,
+        duration: 1.2,
+        stagger: 0.1,
+        ease: "expo.out",
+      });
 
-    const titleInterval = setInterval(() => {
-      if (titleIndex < fullTitle.length) {
-        setDisplayedTitle(fullTitle.slice(0, titleIndex + 1));
-        titleIndex++;
-      } else {
-        clearInterval(titleInterval);
-      }
-    }, 80);
+      gsap.from(textRef.current, {
+        y: 30,
+        opacity: 0,
+        delay: 0.5,
+        duration: 1,
+        ease: "power3.out",
+      });
 
-    const textTimeout = setTimeout(() => {
-      const textInterval = setInterval(() => {
-        if (textIndex < fullText.length) {
-          setDisplayedText(fullText.slice(0, textIndex + 1));
-          textIndex++;
-        } else {
-          clearInterval(textInterval);
-        }
-      }, 30);
-    }, fullTitle.length * 80);
+      gsap.from(btnRef.current, {
+        y: 20,
+        opacity: 0,
+        delay: 0.7,
+        duration: 1,
+        ease: "power3.out",
+      });
 
-    return () => {
-      clearInterval(titleInterval);
-      clearTimeout(textTimeout);
-    };
+      // Floating image with parallax
+      gsap.from(imageRef.current, {
+        scale: 1.2,
+        opacity: 0,
+        duration: 1.5,
+        ease: "expo.out",
+      });
+
+      // Blobs animation
+      gsap.to(".hero-blob", {
+        x: "random(-50, 50)",
+        y: "random(-50, 50)",
+        duration: "random(10, 20)",
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+        stagger: {
+          each: 2,
+          from: "random",
+        },
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
   }, []);
 
   return (
-    <section
-      id="hero"
-      className="relative w-full min-h-screen flex items-center justify-start px-4 sm:px-10 md:px-20 overflow-hidden"
-      style={{
-        backgroundImage: "url('/bg-hero.png')",
-        backgroundSize: "cover", // تغطية كاملة للشاشة
-        backgroundPosition: "center", // توسيط الصورة
-      }}
+    <header
+      ref={containerRef}
+      className="relative min-h-screen pt-32 pb-20 flex items-center overflow-hidden bg-background"
     >
-      <div className="bg-white/80 backdrop-blur-md p-8 sm:p-12 rounded-xl max-w-xl animate-fadeIn">
-        <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 leading-tight">
-          {displayedTitle}
-          <span className="text-pink-600 ml-2 animate-bounce inline-block">
-            Cosmetic Store
-          </span>
-        </h1>
-
-        <p className="mt-6 text-gray-700 text-lg sm:text-xl animate-textReveal">
-          {displayedText}
-        </p>
-
-        <Link
-          href="/"
-          className="mt-8 inline-block bg-pink-600 text-gray-500 text-lg font-semibold px-6 py-3 rounded-full transition hover:bg-pink-700 hover:scale-105 shadow-lg"
-        >
-          Discover Latest Products
-        </Link>
+      {/* Cinematic Blobs Background */}
+      <div ref={blobsRef} className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+        <div className="hero-blob absolute top-[-10%] right-[-10%] w-[50vw] h-[50vw] bg-primary-200/20 blur-[120px] rounded-full" />
+        <div className="hero-blob absolute bottom-[-10%] left-[-10%] w-[40vw] h-[40vw] bg-accent-gold/10 blur-[100px] rounded-full" />
+        <div className="hero-blob absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[30vw] h-[30vw] bg-primary-100/10 blur-[80px] rounded-full" />
       </div>
 
-      <style jsx>{`
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
+      <div className="container mx-auto px-6 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="text-center lg:text-right">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-100/50 text-primary-600 text-xs font-black uppercase tracking-widest mb-8 border border-primary-200/30 backdrop-blur-md"
+          >
+            <Sparkles size={14} className="fill-current" />
+            <span>Premium Collection 2024</span>
+          </motion.div>
 
-        @keyframes textReveal {
-          from {
-            opacity: 0;
-            clip-path: inset(0 100% 0 0);
-          }
-          to {
-            opacity: 1;
-            clip-path: inset(0 0 0 0);
-          }
-        }
+          <h1 className="hero-title text-6xl md:text-8xl font-black text-foreground leading-[1.1] mb-8 tracking-tighter">
+            <span className="inline-block">تألقي</span><br />
+            <span className="inline-block">بجمال</span><br />
+            <span className="gradient-text inline-block">MOU</span>
+          </h1>
 
-        .animate-fadeIn {
-          animation: fadeIn 1s ease-out forwards;
-        }
+          <p 
+            ref={textRef}
+            className="text-xl md:text-2xl text-foreground/50 mb-12 max-w-xl lg:mr-0 mx-auto font-medium leading-relaxed"
+          >
+            اكتشفي عالمنا الساحر من مستحضرات التجميل الأصلية. نحن هنا لنكون جزءاً من جمالك اليومي.
+          </p>
 
-        .animate-textReveal {
-          animation: textReveal 0.8s ease-out forwards;
-          animation-delay: ${fullTitle.length * 0.08}s;
-        }
+          <div ref={btnRef} className="hero-btns flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            <Link href="#shop" className="btn-premium text-lg px-10 h-16 group">
+               <span>تسوقي الآن</span>
+               <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+            </Link>
+            <Link href="/about" className="btn-outline text-lg px-10 h-16">
+               اكتشفي المزيد
+            </Link>
+          </div>
+        </div>
 
-        .animate-bounce {
-          animation: bounce 2s infinite;
-        }
+        <div className="relative">
+          <div 
+            ref={imageRef}
+            className="relative z-10 w-full aspect-[4/5] rounded-[4rem] overflow-hidden premium-shadow border-8 border-white/50 backdrop-blur-xl"
+          >
+            <img 
+              src="/bg-hero.png" 
+              alt="MOU Beauty" 
+              className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
+            />
+            {/* Overlay Glass Tag */}
+            <div className="absolute bottom-10 left-10 glass px-8 py-4 rounded-3xl border border-white/40 backdrop-blur-2xl">
+              <p className="text-foreground/40 text-xs font-black uppercase tracking-widest mb-1">New Arrivals</p>
+              <p className="text-2xl font-black text-foreground leading-none">Summer Glow &apos;24</p>
+            </div>
+          </div>
+          
+          {/* Floating Element 1 */}
+          <motion.div
+            animate={{ y: [0, -20, 0] }}
+            transition={{ duration: 4, repeat: -1, ease: "easeInOut" }}
+            className="absolute -top-10 -right-10 w-32 h-32 glass rounded-full flex items-center justify-center p-6 border-white/40 shadow-2xl z-20"
+          >
+            <Star size={40} className="text-accent-gold fill-accent-gold" />
+          </motion.div>
 
-        @keyframes bounce {
-          0%, 20%, 50%, 80%, 100% {
-            transform: translateY(0);
-          }
-          40% {
-            transform: translateY(-10px);
-          }
-          60% {
-            transform: translateY(-5px);
-          }
-        }
-           @media (max-height: 500px) {
-      #hero {
-        min-height: 600px;
-      }
-      `}</style>
-    </section>
+          {/* Floating Element 2 */}
+          <motion.div
+            animate={{ y: [0, 20, 0] }}
+            transition={{ duration: 5, repeat: -1, ease: "easeInOut", delay: 0.5 }}
+            className="absolute -bottom-6 -left-6 glass px-6 py-4 rounded-2xl border-white/40 shadow-2xl z-20 flex items-center gap-3"
+          >
+             <div className="w-10 h-10 rounded-full bg-green-500/10 flex items-center justify-center text-green-600">
+                <CheckCircle2 size={24} />
+             </div>
+             <div>
+               <p className="text-[10px] font-black uppercase text-foreground/40">Guaranteed</p>
+               <p className="text-sm font-black text-foreground">100% Original</p>
+             </div>
+          </motion.div>
+        </div>
+      </div>
+    </header>
   );
 };
 
